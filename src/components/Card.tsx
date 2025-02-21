@@ -10,7 +10,9 @@ export const Card = ({ data }: {
         vote_average: number
     }
 }) => {
-    return <div><img src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`} />
+    return <div style={{
+        border: '1px solid black'
+    }}><img src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`} />
         <h2>{data.title}</h2>
         {data.release_date}
     </div>
