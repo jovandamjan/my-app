@@ -8,3 +8,5 @@ Slike https://developer.themoviedb.org/docs/image-basics
 
 Deployovanje
 https://vercel.com/jovans-projects-9b6231b0/my-app
+
+React https://react.dev/learn
