@@ -1,34 +1,38 @@
-import {useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import { useEffect, useState } from 'react';
+
 import './App.css';
+import { Card } from './components/Card';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [movies, setMovies] = useState(null)
 
+  useEffect(() => {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmOWZmYzcwMmJlNjYwYWQ5YjY5Yzg3YjQxMzk0MjIzZSIsIm5iZiI6MTYzOTQ3NjczNi41MDMsInN1YiI6IjYxYjg2ZTAwMjE2MjFiMDA0NDFiOTczYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OtwDaQ1fZw6iQyd76VaK9G-yjqhpjzxja8dqqwHvBDU',
+      },
+    };
 
+    fetch(
+      'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
+      options
+    )
+      .then(res => res.json())
+      .then(res => {
+        setMovies(res.results)
+      })
+      .catch(err => console.error(err));
+  }, []);
+
+  console.log(movies);
+  if (!movies || !movies.length) return <>No movies found</>
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <h1>Movies</h1>
+      {movies.map((movie) => <Card data={movie} />)}
     </>
   )
 }
